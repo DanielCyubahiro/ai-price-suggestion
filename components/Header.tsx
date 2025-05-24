@@ -4,6 +4,7 @@ import SignInButton from '@/components/SignInButton';
 import SignOutButton from '@/components/SignOutButton';
 import { Button } from '@/components/ui/button';
 import { getServerSession } from 'next-auth';
+import Image from "next/image";
 
 export default async function Header() {
   const session = await getServerSession(authOptions);
@@ -12,7 +13,7 @@ export default async function Header() {
     <header className="border-b">
       <div className="container mx-auto flex h-16 items-center justify-between p-4">
         <Link href="/" className="text-2xl font-bold">
-          VintageVault ✨
+          <Image src={'trendies-logo.svg'} alt={'logo'} width={150} height={150}/>
         </Link>
         <nav className="flex items-center space-x-4">
           {session?.user ? (
