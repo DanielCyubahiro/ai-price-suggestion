@@ -8,8 +8,8 @@ import { getServerSession } from "next-auth";
 
 async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promise<number> {
   const prompt = `
+    You are a pricing expert for vintage luxury second-hand items especially from Moroccan origin.
     Suggest a fair market price based on the following details:
-    
     
     Title: ${item.title}
     Description: ${item.description}
@@ -18,7 +18,7 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
     Condition: ${item.condition}
     
     Consider:
-    - Current market trends for such products
+    - Current market trends for similar items
     - Rarity and desirability of the brand
     - Item condition (mint, excellent, good, fair)
     - Recent sales of similar items
