@@ -64,7 +64,6 @@ model Listing {
   condition   String
   price       Float?
   imageUrl    String?
-  isSold      Boolean  @default(false)
   userId      String
   user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
