@@ -10,15 +10,24 @@ interface AuthUser {
   };
 }
 
+const protectedRoutes = [
+  "/listings/new"
+];
+
 export default auth((req: NextRequest & { auth?: AuthUser }) => {
-  if (!req.auth && req.nextUrl.pathname.startsWith("/listings/new")) {
+  const isProtectedRoute = protectedRoutes.some(route =>
+    req.nextUrl.pathname.startsWith(route)
+  );
+
+  if (!req.auth && isProtectedRoute) {
     const newUrl = new URL("/api/auth/signin", req.nextUrl.origin);
     newUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
     return NextResponse.redirect(newUrl);
   }
+
   return NextResponse.next();
 });
 
 export const config = {
-  matcher: ["/listings/new/:path*"],
+  matcher: protectedRoutes.map(route => `${route}/:path*`),
 };
