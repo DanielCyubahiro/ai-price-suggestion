@@ -15,11 +15,11 @@ export default async function Header() {
           VintageVault ✨
         </Link>
         <nav className="flex items-center space-x-4">
-          <Link href="/listings/new">
-            <Button variant="outline">Sell Item</Button>
-          </Link>
           {session?.user ? (
             <>
+              <Link href="/listings/new">
+                <Button variant="outline">Sell Item</Button>
+              </Link>
               <span className="text-sm">Welcome, {session.user.name?.split(' ')[0]}!</span>
               <SignOutButton />
             </>
