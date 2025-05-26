@@ -89,7 +89,7 @@ export default function ListingForm() {
   }
 
   return (
-    <Card className="max-w-2xl mx-auto">
+    <Card className="max-w-4xl mx-auto">
       <CardHeader>
         <CardTitle>Sell Your Luxury Item</CardTitle>
       </CardHeader>
@@ -106,7 +106,7 @@ export default function ListingForm() {
                     <FormLabel>Title</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="e.g., Vintage Chanel Flap Bag" {...field} />
+                        placeholder="e.g., Vintage Moroccan Berber Kilim Rug" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -121,7 +121,7 @@ export default function ListingForm() {
                     <FormLabel>Brand</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="e.g., Chanel, Hermes, Rolex" {...field} />
+                        placeholder="e.g., Maison de Marrakech, Unbranded (Artisanal)" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -139,7 +139,7 @@ export default function ListingForm() {
                     <FormLabel>Category</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="e.g., Handbag, Watch, Jewelry" {...field} />
+                        placeholder="e.g., Home Decor, Traditional Attire, Moroccan Rugs" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -171,7 +171,7 @@ export default function ListingForm() {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Describe the item's history, condition, and features..." {...field} />
+                      placeholder="Describe the item's story, unique features, materials, dimensions, and any notable details or imperfections... For Moroccan items, mention origin or specific craft style if known." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
