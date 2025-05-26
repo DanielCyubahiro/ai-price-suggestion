@@ -1,12 +1,12 @@
-"use server";
+'use server';
 
-import prisma from "@/lib/prisma";
-import { ListingFormData, listingSchema } from "@/lib/validators";
-import { authOptions } from "@/auth";
-import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth";
+import prisma from '@/lib/prisma';
+import {ListingFormData, listingSchema} from '@/lib/validators';
+import {authOptions} from '@/auth';
+import {revalidatePath} from 'next/cache';
+import {getServerSession} from 'next-auth';
 
-async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promise<number> {
+async function getAISuggestedPrice(item: Omit<ListingFormData, 'price'>): Promise<number> {
   const prompt = `
     You are a pricing expert for vintage luxury second-hand items especially from Moroccan origin.
     Suggest a fair market price based on the following details:
@@ -27,22 +27,22 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
   `;
 
   const response = await fetch(
-    "https://api.groq.com/openai/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
-        "Content-Type": "application/json"
+      'https://api.groq.com/openai/v1/chat/completions',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            {role: 'system', content: 'You are a pricing assistant.'},
+            {role: 'user', content: prompt},
+          ],
+          temperature: 0.7,
+        }),
       },
-      body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
-        messages: [
-          { role: "system", content: "You are a pricing assistant." },
-          { role: "user", content: prompt }
-        ],
-        temperature: 0.7
-      })
-    }
   );
 
   if (!response.ok) {
@@ -51,29 +51,29 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
   }
 
   const data = await response.json();
-  const textOutput = data.choices?.[0]?.message?.content || "";
-  const suggestedPrice = textOutput.match(/\d+/)?.[0] || "N/A";
+  const textOutput = data.choices?.[0]?.message?.content || '';
+  const suggestedPrice = textOutput.match(/\d+/)?.[0] || 'N/A';
 
   return Math.round(suggestedPrice / 50) * 50;
 }
 
 // --- Suggest Price Action ---
-export async function suggestPriceAction(item: Omit<ListingFormData, "price">): Promise<{
+export async function suggestPriceAction(item: Omit<ListingFormData, 'price'>): Promise<{
   success: boolean;
   price?: number;
   error?: string
 }> {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    return { success: false, error: "Authentication required." };
+    return {success: false, error: 'Authentication required.'};
   }
 
   try {
     const price = await getAISuggestedPrice(item);
-    return { success: true, price };
+    return {success: true, price};
   } catch (error) {
-    console.error("AI Price Suggestion Error:", error);
-    return { success: false, error: "Failed to get AI suggestion." };
+    console.error('AI Price Suggestion Error:', error);
+    return {success: false, error: 'Failed to get AI suggestion.'};
   }
 }
 
@@ -86,13 +86,13 @@ export async function createListingAction(data: ListingFormData): Promise<{
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return { success: false, error: "Authentication required." };
+    return {success: false, error: 'Authentication required.'};
   }
 
   const validation = listingSchema.safeParse(data);
 
   if (!validation.success) {
-    return { success: false, error: "Invalid data provided." };
+    return {success: false, error: 'Invalid data provided.'};
   }
 
   const {
@@ -101,7 +101,7 @@ export async function createListingAction(data: ListingFormData): Promise<{
     brand,
     category,
     condition,
-    price
+    price,
   } = validation.data;
 
   try {
@@ -113,19 +113,19 @@ export async function createListingAction(data: ListingFormData): Promise<{
         category,
         condition,
         price,
-        userId: session.user.id
-      }
+        userId: session.user.id,
+      },
     });
 
-    revalidatePath("/");
-    revalidatePath("/listings/new");
+    revalidatePath('/');
+    revalidatePath('/listings/new');
 
-    return { success: true, listingId: newListing.id };
+    return {success: true, listingId: newListing.id};
   } catch (error) {
-    console.error("Create Listing Error:", error);
+    console.error('Create Listing Error:', error);
     return {
       success: false,
-      error: "Database error. Failed to create listing."
+      error: 'Database error. Failed to create listing.',
     };
   }
 }
