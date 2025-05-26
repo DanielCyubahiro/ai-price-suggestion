@@ -61,7 +61,8 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, 'price'>): Promis
 
   const data = await response.json();
   const textOutput = data.choices?.[0]?.message?.content || '';
-  return textOutput.match(/\d+/)?.[0] || 'N/A';
+  const price = textOutput.match(/(\d+\.?\d*|\d+)/);
+  return price?.[0];
 }
 
 // --- Suggest Price Action ---
