@@ -1,6 +1,6 @@
-import { auth } from "@/auth";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import {auth} from '@/auth';
+import type {NextRequest} from 'next/server';
+import {NextResponse} from 'next/server';
 
 interface AuthUser {
   user?: {
@@ -11,17 +11,17 @@ interface AuthUser {
 }
 
 const protectedRoutes = [
-  "/listings/new"
+  '/listings/new',
 ];
 
 export default auth((req: NextRequest & { auth?: AuthUser }) => {
   const isProtectedRoute = protectedRoutes.some(route =>
-    req.nextUrl.pathname.startsWith(route)
+      req.nextUrl.pathname.startsWith(route),
   );
 
   if (!req.auth && isProtectedRoute) {
-    const newUrl = new URL("/api/auth/signin", req.nextUrl.origin);
-    newUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
+    const newUrl = new URL('/api/auth/signin', req.nextUrl.origin);
+    newUrl.searchParams.set('callbackUrl', req.nextUrl.pathname);
     return NextResponse.redirect(newUrl);
   }
 

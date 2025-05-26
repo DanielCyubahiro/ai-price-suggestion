@@ -10,11 +10,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Trendies",
-  description: "Luxury second-hand Moroccan marketplace",
+  description: "Luxury second-hand Moroccan marketplace"
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: ReactNode;
 }>) {
