@@ -280,8 +280,9 @@ export default function ListingForm() {
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>
-                            Enter your desired price in Euros. You can also
-                            use the AI suggestion feature below.
+                            Enter your desired price in Euros.
+                            <br/>
+                            You can also use the AI suggestion feature below.
                           </p>
                         </TooltipContent>
                       </Tooltip>
