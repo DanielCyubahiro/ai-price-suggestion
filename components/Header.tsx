@@ -15,7 +15,7 @@ export default async function Header() {
         className="container mx-auto flex h-16 items-center justify-between p-4">
         <Link href="/" className="text-2xl font-bold">
           <Image
-            src={"trendies-logo.svg"}
+            src={"/trendies-logo.svg"}
             alt={"logo"} width={150}
             height={150}
           />
