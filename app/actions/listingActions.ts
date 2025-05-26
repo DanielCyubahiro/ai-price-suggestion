@@ -6,6 +6,15 @@ import {authOptions} from '@/auth';
 import {revalidatePath} from 'next/cache';
 import {getServerSession} from 'next-auth';
 
+/**
+ * Fetches an AI-suggested price for a given item based on its details.
+ * This function constructs a prompt for a Groq API model and parses its response.
+ *
+ * @param item - An object containing item details (title, description, brand, category, condition).
+ * Excludes the 'price' field as this is what the function aims to determine.
+ * @returns A promise that resolves to a suggested numerical price.
+ * @throws Error if the Groq API call fails or returns an unexpected response.
+ */
 async function getAISuggestedPrice(item: Omit<ListingFormData, 'price'>): Promise<number> {
   const prompt = `
     You are a pricing expert for vintage luxury second-hand items especially from Moroccan origin.
@@ -52,9 +61,7 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, 'price'>): Promis
 
   const data = await response.json();
   const textOutput = data.choices?.[0]?.message?.content || '';
-  const suggestedPrice = textOutput.match(/\d+/)?.[0] || 'N/A';
-
-  return Math.round(suggestedPrice / 50) * 50;
+  return textOutput.match(/\d+/)?.[0] || 'N/A';
 }
 
 // --- Suggest Price Action ---
