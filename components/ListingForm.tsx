@@ -91,7 +91,7 @@ export default function ListingForm() {
   return (
     <Card className="max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle>Sell Your Luxury Item</CardTitle>
+        <CardTitle>Item Details</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -171,7 +171,7 @@ export default function ListingForm() {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Describe the item's story, unique features, materials, dimensions, and any notable details or imperfections... For Moroccan items, mention origin or specific craft style if known." {...field} />
+                      placeholder={"Describe the item's story, unique features, materials, dimensions, and any notable details or imperfections.\nFor Moroccan items, mention origin or specific craft style if known."} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
