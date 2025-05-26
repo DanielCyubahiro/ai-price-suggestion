@@ -65,6 +65,13 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
 }
 
 // --- Suggest Price Action ---
+/**
+ * Server Action to get an AI-suggested price for an item.
+ * Requires user authentication.
+ *
+ * @param item - The item details (excluding price) for which to suggest a price.
+ * @returns A promise resolving to an object with success status, suggested price, or an error message.
+ */
 export async function suggestPriceAction(item: Omit<ListingFormData, "price">): Promise<{
   success: boolean;
   price?: number;
@@ -85,6 +92,14 @@ export async function suggestPriceAction(item: Omit<ListingFormData, "price">): 
 }
 
 // --- Create Listing Action ---
+/**
+ * Server Action to create a new listing.
+ * Requires user authentication and validates the provided listing data.
+ * Revalidates relevant paths upon successful creation.
+ *
+ * @param data - The listing data conforming to ListingFormData.
+ * @returns A promise resolving to an object with success status, new listing ID, or an error message.
+ */
 export async function createListingAction(data: ListingFormData): Promise<{
   success: boolean;
   listingId?: string;
@@ -125,7 +140,6 @@ export async function createListingAction(data: ListingFormData): Promise<{
     });
 
     revalidatePath("/");
-    revalidatePath("/listings/new");
 
     return { success: true, listingId: newListing.id };
   } catch (error) {
