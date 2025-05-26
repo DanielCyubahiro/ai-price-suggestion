@@ -171,6 +171,7 @@ export default function ListingForm() {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
+                      rows={5}
                       placeholder={"Describe the item's story, unique features, materials, dimensions, and any notable details or imperfections.\nFor Moroccan items, mention origin or specific craft style if known."} {...field} />
                   </FormControl>
                   <FormMessage />
