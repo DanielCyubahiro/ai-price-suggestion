@@ -22,6 +22,13 @@ import {
   createListingAction,
   suggestPriceAction
 } from "@/app/actions/listingActions";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from "@/components/ui/tooltip";
+import { HelpCircle } from "lucide-react";
 
 export default function ListingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,7 +43,7 @@ export default function ListingForm() {
       brand: "",
       category: "",
       condition: "",
-      price: 0
+      price: undefined,
     }
   });
 
@@ -89,145 +96,241 @@ export default function ListingForm() {
   }
 
   return (
-    <Card className="max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle>Item Details</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <fieldset className="md:grid md:grid-cols-2 md:gap-x-6">
-              {/* Title */}
+    <TooltipProvider>
+      <Card className="max-w-4xl mx-auto">
+        <CardHeader>
+          <CardTitle>Item Details</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <fieldset className="md:grid md:grid-cols-2 md:gap-x-6">
+                {/* Title */}
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center">
+                        <FormLabel>Title</FormLabel>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <HelpCircle
+                              className="ml-1.5 h-4 w-4 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              Provide a clear and concise title for your item.
+                              <br/>
+                              Mention key features or the type of item.
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                      <FormControl>
+                        <Input placeholder="e.g., Berber Rug" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Brand */}
+                <FormField
+                  control={form.control}
+                  name="brand"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center">
+                        <FormLabel>Brand</FormLabel>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <HelpCircle
+                              className="ml-1.5 h-4 w-4 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              Specify the brand of the item.
+                              <br/>
+                              If it&#39;s an artisanal or unbranded, you can state that.
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                      <FormControl>
+                        <Input
+                          placeholder="e.g., Artisanal"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </fieldset>
+
+              <fieldset className="md:grid md:grid-cols-2 md:gap-x-6">
+                {/* Category */}
+                <FormField
+                  control={form.control}
+                  name="category"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center">
+                        <FormLabel>Category</FormLabel>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <HelpCircle
+                              className="ml-1.5 h-4 w-4 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              Select the most appropriate category for your
+                              item (e.g., Home Decor, Fashion, Jewelry).
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                      <FormControl>
+                        <Input placeholder="e.g., Moroccan Rugs" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Condition */}
+                <FormField
+                  control={form.control}
+                  name="condition"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center">
+                        <FormLabel>Condition</FormLabel>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <HelpCircle
+                              className="ml-1.5 h-4 w-4 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              Describe the condition of the item (e.g.,
+                              Pristine, Excellent, Very Good, Good, Fair).
+                              <br/>
+                              Please provide information about any wear or imperfections.
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                      <FormControl>
+                        <Input placeholder="e.g., Excellent" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </fieldset>
+
+              {/* Description */}
               <FormField
                 control={form.control}
-                name="title"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <div className="flex items-center">
+                      <FormLabel>Description</FormLabel>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <HelpCircle
+                            className="ml-1.5 h-4 w-4 text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>
+                            Provide a detailed description. Include the item&#39;s
+                            story, unique features, materials, dimensions, and
+                            any notable details or imperfections.
+                            <br/>
+                            For Moroccan items, mention origin or specific craft style if
+                            known.
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
                     <FormControl>
-                      <Input
-                        placeholder="e.g., Vintage Moroccan Berber Kilim Rug" {...field} />
+                      <Textarea
+                        placeholder="e.g., Handwoven wool rug from the Atlas Mountains..."
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {/* Brand */}
+
+              {/* Price */}
               <FormField
                 control={form.control}
-                name="brand"
+                name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Brand</FormLabel>
+                    <div className="flex items-center">
+                      <FormLabel>Price (€)</FormLabel>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <HelpCircle
+                            className="ml-1.5 h-4 w-4 text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>
+                            Enter your desired price in Euros. You can also
+                            use the AI suggestion feature below.
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
                     <FormControl>
                       <Input
-                        placeholder="e.g., Maison de Marrakech, Unbranded (Artisanal)" {...field} />
+                        type="number"
+                        step="0.01"
+                        placeholder="e.g., 150.00"
+                        {...field}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
+                    <FormDescription>
+                      Click below for an AI suggestion.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            </fieldset>
 
-            <fieldset className="md:grid md:grid-cols-2 md:gap-x-6">
-              {/* Category */}
-              <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Category</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="e.g., Home Decor, Traditional Attire, Moroccan Rugs" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* Condition */}
-              <FormField
-                control={form.control}
-                name="condition"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Condition</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="e.g., Pristine, Excellent, Very Good" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </fieldset>
-
-            {/* Description */}
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      rows={5}
-                      placeholder={"Describe the item's story, unique features, materials, dimensions, and any notable details or imperfections.\nFor Moroccan items, mention origin or specific craft style if known."} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Price */}
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price (€)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      placeholder="Enter your price or let AI suggest" {...field}
-                      value={field.value ?? ""} />
-                  </FormControl>
-                  <FormDescription>
-                    Click below for an AI suggestion.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="flex justify-between items-center">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleSuggestPrice}
-                disabled={isSuggesting || isSubmitting}
-              >
-                {isSuggesting ? "Thinking..." : "✨ Suggest Price (AI)"}
-              </Button>
-
-              <div className={"flex gap-2"}>
+              <div className="flex justify-between items-center">
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => form.reset()}
-                  disabled={isSubmitting || isSuggesting}
+                  onClick={handleSuggestPrice}
+                  disabled={isSuggesting || isSubmitting}
                 >
-                  Reset
+                  {isSuggesting ? "Thinking..." : "✨ Suggest Price (AI)"}
                 </Button>
-                <Button type="submit" disabled={isSubmitting || isSuggesting}>
-                  {isSubmitting ? "Submitting..." : "Submit"}
-                </Button>
+
+                <div className={"flex gap-2"}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => form.reset()}
+                    disabled={isSubmitting || isSuggesting}
+                  >
+                    Reset
+                  </Button>
+                  <Button type="submit" disabled={isSubmitting || isSubmitting}>
+                    {isSubmitting ? "Submitting..." : "Submit"}
+                  </Button>
+                </div>
               </div>
-            </div>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </TooltipProvider>
   );
 }
