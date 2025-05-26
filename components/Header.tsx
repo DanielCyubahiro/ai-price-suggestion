@@ -14,8 +14,11 @@ export default async function Header() {
       <div
         className="container mx-auto flex h-16 items-center justify-between p-4">
         <Link href="/" className="text-2xl font-bold">
-          <Image src={"trendies-logo.svg"} alt={"logo"} width={150}
-                 height={150} />
+          <Image
+            src={"trendies-logo.svg"}
+            alt={"logo"} width={150}
+            height={150}
+          />
         </Link>
         <nav className="flex items-center space-x-4">
           {session?.user ? (
