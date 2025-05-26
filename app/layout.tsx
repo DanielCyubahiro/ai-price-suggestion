@@ -9,8 +9,8 @@ import AuthProvider from "@/components/AuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Vintage Vault",
-  description: "Luxury second-hand marketplace",
+  title: "Trendies",
+  description: "Luxury second-hand Moroccan marketplace",
 };
 
 export default function RootLayout({
