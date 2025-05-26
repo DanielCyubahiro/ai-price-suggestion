@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+/**
+ * Defines the schema for listing data validation.
+ * Ensures that listing submissions meet specific criteria for title, description, brand, category, condition, and price.
+ */
 export const listingSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters").max(100),
   description: z.string().
