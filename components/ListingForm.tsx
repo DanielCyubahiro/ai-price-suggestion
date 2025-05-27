@@ -45,7 +45,7 @@ export default function ListingForm() {
       brand: "",
       category: "",
       condition: "",
-      price: undefined,
+      price: undefined
     }
   });
 
@@ -124,7 +124,7 @@ export default function ListingForm() {
                           <TooltipContent>
                             <p>
                               Provide a clear and concise title for your item.
-                              <br/>
+                              <br />
                               Mention key features or the type of item.
                             </p>
                           </TooltipContent>
@@ -153,8 +153,9 @@ export default function ListingForm() {
                           <TooltipContent>
                             <p>
                               Specify the brand of the item.
-                              <br/>
-                              If it&#39;s an artisanal or unbranded, you can state that.
+                              <br />
+                              If it&#39;s an artisanal or unbranded, you can
+                              state that.
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -217,8 +218,9 @@ export default function ListingForm() {
                             <p>
                               Describe the condition of the item (e.g.,
                               Pristine, Excellent, Very Good, Good, Fair).
-                              <br/>
-                              Please provide information about any wear or imperfections.
+                              <br />
+                              Please provide information about any wear or
+                              imperfections.
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -247,11 +249,13 @@ export default function ListingForm() {
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>
-                            Provide a detailed description. Include the item&#39;s
+                            Provide a detailed description. Include the
+                            item&#39;s
                             story, unique features, materials, dimensions, and
                             any notable details or imperfections.
-                            <br/>
-                            For Moroccan items, mention origin or specific craft style if
+                            <br />
+                            For Moroccan items, mention origin or specific craft
+                            style if
                             known.
                           </p>
                         </TooltipContent>
@@ -284,7 +288,7 @@ export default function ListingForm() {
                         <TooltipContent>
                           <p>
                             Enter your desired price in Euros.
-                            <br/>
+                            <br />
                             You can also use the AI suggestion feature below.
                           </p>
                         </TooltipContent>
@@ -320,11 +324,19 @@ export default function ListingForm() {
                 <div className={"flex gap-2"}>
                   <Button
                     type="button"
-                    variant="outline"
+                    variant="ghost"
                     onClick={() => form.reset()}
                     disabled={isSubmitting || isSuggesting}
                   >
                     Reset
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => router.push("/")}
+                    disabled={isSubmitting || isSuggesting}
+                  >
+                    Cancel
                   </Button>
                   <Button type="submit" disabled={isSubmitting || isSubmitting}>
                     {isSubmitting ? "Submitting..." : "Submit"}
