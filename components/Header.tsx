@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { authOptions } from "@/auth";
-import SignInButton from "@/components/SignInButton";
-import SignOutButton from "@/components/SignOutButton";
-import { Button } from "@/components/ui/button";
+import SignInButton from "@/components/Buttons/SignInButton";
+import SignOutButton from "@/components/Buttons/SignOutButton";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 
@@ -23,11 +22,9 @@ export default async function Header() {
         <nav className="flex items-center space-x-4">
           {session?.user ? (
             <>
-              <Link href="/listings/new">
-                <Button variant="outline">Sell Item</Button>
-              </Link>
-              <span className="text-sm">Welcome, {session.user.name?.split(
-                " ")[0]}!</span>
+              <p className="text-sm">Welcome, {session.user.name?.split(
+                " ")[0]}!
+              </p>
               <SignOutButton />
             </>
           ) : (
