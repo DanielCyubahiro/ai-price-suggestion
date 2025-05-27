@@ -5,6 +5,7 @@ import { ListingFormData, listingSchema } from "@/lib/validators";
 import { authOptions } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
+import { Listing } from "@prisma/client";
 
 /**
  * Fetches an AI-suggested price for a given item based on its details.
@@ -148,5 +149,39 @@ export async function createListingAction(data: ListingFormData): Promise<{
       success: false,
       error: "Database error. Failed to create listing."
     };
+  }
+}
+
+/**
+ * Server Action to fetch listings for the authenticated user.
+ * @returns A promise resolving to an object with success status, listings array, or an error message.
+ */
+export async function getListingsAction(): Promise<{
+  success: boolean;
+  listings?: Listing[];
+  error?: string;
+}> {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    return { success: false, error: "Authentication required." };
+  }
+
+  try {
+    const listings = await prisma.listing.findMany({
+      where: {
+        userId: session.user.id,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return { success: true, listings };
+  } catch (error) {
+    console.error("Error fetching listings:", error);
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
+    }
+    return { success: false, error: "Failed to fetch listings." };
   }
 }
