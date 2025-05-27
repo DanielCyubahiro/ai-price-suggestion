@@ -29,11 +29,13 @@ import {
   TooltipTrigger
 } from "@/components/ui/tooltip";
 import { HelpCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function ListingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuggesting, setIsSuggesting] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<ListingFormData>({
     resolver: zodResolver(listingSchema),
@@ -58,6 +60,7 @@ export default function ListingForm() {
         description: "Your listing has been created."
       });
       form.reset();
+      router.push("/");
     } else {
       toast({
         title: "Error",
