@@ -7,10 +7,14 @@ This is a feature to be integrated with Trendies, a platform designed as a marke
 
 * **User Authentication** 🔐: Secure sign-up and sign-in functionality using NextAuth.js with Google Provider.
 * **Create Listings** 📝: Authenticated users can create new listings for their luxury items by providing details such as title, description, brand, category, condition, and price.
+* **View Listings** 📄: Authenticated users can view a table of their created listings, showing title, category, brand, condition, and price.
 * **AI Price Suggestion** 🤖💰: An AI-powered feature that suggests a fair market price for an item based on its details. This feature leverages the Groq API with a Llama 3.3 70b model, specialized in pricing vintage luxury second-hand items, especially those of Moroccan origin.
 * **Form Validation** ✅: Ensures that listing submissions meet specific criteria using Zod for schema validation.
 * **Toast Notifications** 📢: Provides user feedback for actions like successful listing creation or errors using a custom toast component.
 * **Responsive Design** 📱💻: Styled with Tailwind CSS for a modern and responsive user interface.
+* **Protected Routes**: Middleware ensures that only authenticated users can access certain routes, like the new listing page.
+* **Customizable UI Components**: Used Shadcn/ui for UI components like Buttons, Cards, Forms, Inputs, etc.
+* **Redirect for Unauthenticated Users**: Users attempting to access protected pages without being logged in are redirected to the sign-in page.
 
 ## 🏁 Getting Started
 
@@ -95,13 +99,13 @@ This is a feature to be integrated with Trendies, a platform designed as a marke
     ```
 
 6.  **Open your browser:** 🌐
-    Navigate to [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) to see the application.
+    Navigate to http://localhost:3000 to see the application.
 
 ## 🏗️ Project Structure
 
 * `app/`: Contains the core application logic, including pages, layouts, and server actions.
     * `actions/`: Server-side actions (e.g., `listingActions.ts` for creating listings and suggesting prices).
-    * `api/`: API routes (e.g., NextAuth.js authentication routes)./route.ts]
+    * `api/`: API routes (e.g., NextAuth.js authentication routes).
     * `listings/new/`: Page for creating a new listing.
     * `layout.tsx`: Root layout of the application.
     * `page.tsx`: Homepage of the application.
@@ -112,7 +116,8 @@ This is a feature to be integrated with Trendies, a platform designed as a marke
     * `AuthProvider.tsx`: Provides session context for NextAuth.js.
     * `Header.tsx`: Application header component.
     * `ListingForm.tsx`: Form for creating new listings.
-    * `SignInButton.tsx` / `SignOutButton.tsx`: Authentication buttons.
+    * `ListingsTable.tsx`: Component to display user's listings.
+    * `Buttons/`: Contains various button components like `AddItemButton.tsx`, `SignInButton.tsx` / `SignOutButton.tsx`.
 * `hooks/`: Custom React hooks (e.g., `use-toast.ts` for notifications).
 * `lib/`: Utility functions and library configurations.
     * `prisma.ts`: Prisma client instance.
@@ -130,7 +135,10 @@ This is a feature to be integrated with Trendies, a platform designed as a marke
     * Allow the AI to consider image data for more accurate pricing.
     * Provide more detailed feedback on why a certain price was suggested (e.g., based on specific market comparables).
     * Fine-tune the AI model further with more specific data on Moroccan luxury items if available.
+* **Comprehensive Testing** 🧪: Implement unit, integration, and end-to-end tests to ensure application reliability and stability (e.g., using Jest, React Testing Library, Cypress/Playwright).
+* **Internationalization (i18n)** 🌍: Support for multiple languages, especially French and Arabic, given the Moroccan focus.
 * **Browse and Search Listings** 🔍: Develop features for users to browse, filter, and search existing listings.
 * **Detailed Listing Pages** 📖: Individual pages for each listing with more detailed information and images.
-* **Internationalization (i18n)** 🌍: Support for multiple languages, especially French and Arabic, given the Moroccan focus.
+* **Edit and Delete Listings** ✏️🗑️: Enable users to modify or remove their existing listings.
+* **Pagination for Listings** 🔢: Implement pagination for the listings table if the number of listings becomes large.
 * **More Authentication Providers** 🔑: Add other OAuth providers or email/password authentication.
