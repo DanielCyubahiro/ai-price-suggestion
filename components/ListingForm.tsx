@@ -29,11 +29,13 @@ import {
   TooltipTrigger
 } from "@/components/ui/tooltip";
 import { HelpCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function ListingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuggesting, setIsSuggesting] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<ListingFormData>({
     resolver: zodResolver(listingSchema),
@@ -43,7 +45,7 @@ export default function ListingForm() {
       brand: "",
       category: "",
       condition: "",
-      price: undefined,
+      price: undefined
     }
   });
 
@@ -58,6 +60,7 @@ export default function ListingForm() {
         description: "Your listing has been created."
       });
       form.reset();
+      router.push("/");
     } else {
       toast({
         title: "Error",
@@ -80,7 +83,7 @@ export default function ListingForm() {
     setIsSuggesting(false);
 
     if (result.success && result.price) {
-      form.setValue("price", result.price); // Set the suggested price
+      form.setValue("price", result.price);
       toast({
         title: "Price Suggested!",
         description: `We suggest a price of €${result.price.toFixed(2)}.`
@@ -103,8 +106,9 @@ export default function ListingForm() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <fieldset className="md:grid md:grid-cols-2 md:gap-x-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <fieldset
+                className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 md:gap-y-8">
                 {/* Title */}
                 <FormField
                   control={form.control}
@@ -121,7 +125,7 @@ export default function ListingForm() {
                           <TooltipContent>
                             <p>
                               Provide a clear and concise title for your item.
-                              <br/>
+                              <br />
                               Mention key features or the type of item.
                             </p>
                           </TooltipContent>
@@ -150,8 +154,9 @@ export default function ListingForm() {
                           <TooltipContent>
                             <p>
                               Specify the brand of the item.
-                              <br/>
-                              If it&#39;s an artisanal or unbranded, you can state that.
+                              <br />
+                              If it&#39;s an artisanal or unbranded, you can
+                              state that.
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -167,8 +172,8 @@ export default function ListingForm() {
                   )}
                 />
               </fieldset>
-
-              <fieldset className="md:grid md:grid-cols-2 md:gap-x-6">
+              <fieldset
+                className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 md:gap-y-8">
                 {/* Category */}
                 <FormField
                   control={form.control}
@@ -214,8 +219,9 @@ export default function ListingForm() {
                             <p>
                               Describe the condition of the item (e.g.,
                               Pristine, Excellent, Very Good, Good, Fair).
-                              <br/>
-                              Please provide information about any wear or imperfections.
+                              <br />
+                              Please provide information about any wear or
+                              imperfections.
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -244,11 +250,13 @@ export default function ListingForm() {
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>
-                            Provide a detailed description. Include the item&#39;s
+                            Provide a detailed description. Include the
+                            item&#39;s
                             story, unique features, materials, dimensions, and
                             any notable details or imperfections.
-                            <br/>
-                            For Moroccan items, mention origin or specific craft style if
+                            <br />
+                            For Moroccan items, mention origin or specific craft
+                            style if
                             known.
                           </p>
                         </TooltipContent>
@@ -281,7 +289,7 @@ export default function ListingForm() {
                         <TooltipContent>
                           <p>
                             Enter your desired price in Euros.
-                            <br/>
+                            <br />
                             You can also use the AI suggestion feature below.
                           </p>
                         </TooltipContent>
@@ -304,30 +312,47 @@ export default function ListingForm() {
                 )}
               />
 
-              <div className="flex justify-between items-center">
+              <section
+                className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleSuggestPrice}
                   disabled={isSuggesting || isSubmitting}
+                  className="w-full sm:w-auto"
                 >
                   {isSuggesting ? "Thinking..." : "✨ Suggest Price (AI)"}
                 </Button>
 
-                <div className={"flex gap-2"}>
+                <section
+                  className="flex flex-col sm:flex-row gap-2 sm:gap-2">
                   <Button
                     type="button"
-                    variant="outline"
+                    variant="ghost"
                     onClick={() => form.reset()}
                     disabled={isSubmitting || isSuggesting}
+                    className="w-full sm:w-auto"
                   >
                     Reset
                   </Button>
-                  <Button type="submit" disabled={isSubmitting || isSubmitting}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => router.push("/")}
+                    disabled={isSubmitting || isSuggesting}
+                    className="w-full sm:w-auto"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || isSuggesting}
+                    className="w-full sm:w-auto"
+                  >
                     {isSubmitting ? "Submitting..." : "Submit"}
                   </Button>
-                </div>
-              </div>
+                </section>
+              </section>
             </form>
           </Form>
         </CardContent>
