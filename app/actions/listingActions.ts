@@ -6,17 +6,22 @@ import { authOptions } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { Listing } from "@prisma/client";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { getEnvVariable } from "@/lib/utils";
 
 /**
  * Fetches an AI-suggested price for a given item based on its details.
- * This function constructs a prompt for a Groq API model and parses its response.
+ * This function constructs a prompt for the Gemini API model and parses its response.
  *
  * @param item - An object containing item details (title, description, brand, category, condition).
  * Excludes the 'price' field as this is what the function aims to determine.
  * @returns A promise that resolves to a suggested numerical price.
- * @throws Error if the Groq API call fails or returns an unexpected response.
+ * @throws Error if the Gemini API call fails or returns an unexpected response.
  */
 async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promise<number> {
+  const genAI = new GoogleGenerativeAI(getEnvVariable("GEMINI_API_KEY"));
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
   const prompt = `
     You are a pricing expert for vintage luxury second-hand items especially from Moroccan origin.
     Suggest a fair market price based on the following details:
@@ -36,33 +41,26 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
     Return only the numerical price value without any currency symbols or text.
   `;
 
-  const response = await fetch(
-    "https://api.groq.com/openai/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
-        messages: [
-          { role: "system", content: "You are a pricing assistant." },
-          { role: "user", content: prompt }
-        ],
-        temperature: 0.7
-      })
+  try {
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const textOutput = response.text();
+
+    const priceMatch = textOutput.match(/\d+(\.\d+)?/);
+    if (priceMatch && priceMatch[0]) {
+      return Number(priceMatch[0]);
+    } else {
+      console.error(
+        "Gemini API did not return a valid numerical price. Output:",
+        textOutput);
+      throw new Error("Failed to parse price from AI suggestion.");
     }
-  );
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Groq API error: ${errorText}`);
+  } catch (error) {
+    console.error("Gemini API error:", error);
+    throw new Error(
+      `Gemini API error: ${error instanceof Error ? error.message : String(
+        error)}`);
   }
-
-  const data = await response.json();
-  const textOutput = data.choices?.[0]?.message?.content || "";
-  return Number(textOutput.match(/\d+/)?.[0] || "N/A");
 }
 
 // --- Suggest Price Action ---
@@ -170,11 +168,11 @@ export async function getListingsAction(): Promise<{
   try {
     const listings = await prisma.listing.findMany({
       where: {
-        userId: session.user.id,
+        userId: session.user.id
       },
       orderBy: {
-        createdAt: "desc",
-      },
+        createdAt: "desc"
+      }
     });
     return { success: true, listings };
   } catch (error) {

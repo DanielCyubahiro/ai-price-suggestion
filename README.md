@@ -8,7 +8,7 @@ This is a feature to be integrated with Trendies, a platform designed as a marke
 * **User Authentication** 🔐: Secure sign-up and sign-in functionality using NextAuth.js with Google Provider.
 * **Create Listings** 📝: Authenticated users can create new listings for their luxury items by providing details such as title, description, brand, category, condition, and price.
 * **View Listings** 📄: Authenticated users can view a table of their created listings, showing title, category, brand, condition, and price.
-* **AI Price Suggestion** 🤖💰: An AI-powered feature that suggests a fair market price for an item based on its details. This feature leverages the Groq API with a Llama 3.3 70b model, specialized in pricing vintage luxury second-hand items, especially those of Moroccan origin.
+* **AI Price Suggestion** 🤖💰: An AI-powered feature that suggests a fair market price for an item based on its details. his feature leverages the Google Gemini API, specialized in pricing vintage luxury second-hand items, especially those of Moroccan origin.
 * **Form Validation** ✅: Ensures that listing submissions meet specific criteria using Zod for schema validation.
 * **Toast Notifications** 📢: Provides user feedback for actions like successful listing creation or errors using a custom toast component.
 * **Responsive Design** 📱💻: Styled with Tailwind CSS for a modern and responsive user interface.
@@ -24,7 +24,7 @@ This is a feature to be integrated with Trendies, a platform designed as a marke
 * npm, yarn, pnpm, or bun
 * A PostgreSQL database (or any other database compatible with Prisma)
 * Google Cloud Platform project with OAuth credentials
-* Groq API Key
+* Gemini API Key
 
 ### Setup Instructions
 
@@ -62,14 +62,14 @@ This is a feature to be integrated with Trendies, a platform designed as a marke
     GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
     GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
 
-    # Groq API
-    GROQ_API_KEY="YOUR_GROQ_API_KEY"
+    # Gemini API
+    GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
     ```
 
     * Replace `USER`, `PASSWORD`, `HOST`, `PORT`, and `DATABASE` with your PostgreSQL connection details.
     * Generate a `NEXTAUTH_SECRET`.
     * Obtain `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` from your Google Cloud Platform project.
-    * Obtain your `GROQ_API_KEY` from [GroqCloud](https://console.groq.com/keys).
+    * Obtain your `GEMINI_API_KEY` from Google AI Studio or Google Cloud Console.
 
 4.  **Set up the database:** 🗄️
     Run Prisma migrations to set up your database schema:
