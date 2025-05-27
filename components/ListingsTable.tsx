@@ -29,47 +29,52 @@ export default async function ListingsTable() {
           <AddItemButton />
         </section>
       ) : (
-        <Table
-          className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <TableCaption
-            className="py-4 text-sm text-gray-500 dark:text-gray-400">
-            A list of your recent luxury item listings.
-          </TableCaption>
-          <TableHeader>
-            <TableRow className="bg-gray-50 dark:bg-gray-800">
-              <TableHead
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider w-[25%]">Title</TableHead>
-              <TableHead
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Category</TableHead>
-              <TableHead
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Brand</TableHead>
-              <TableHead
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Condition</TableHead>
-              <TableHead
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Price
-                (€)</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody
-            className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-            {listings?.map((listing) => (
-              <TableRow key={listing.id}
-                        className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                <TableCell
-                  className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{listing.title}</TableCell>
-                <TableCell
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{listing.category}</TableCell>
-                <TableCell
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{listing.brand}</TableCell>
-                <TableCell
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{listing.condition}</TableCell>
-                <TableCell
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300 text-right">{listing.price?.toFixed(
-                  2) ?? "N/A"}</TableCell>
+        <>
+          <div className={"flex justify-end mb-8"}>
+            <AddItemButton />
+          </div>
+          <Table
+            className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <TableCaption
+              className="py-4 text-sm text-gray-500 dark:text-gray-400">
+              A list of your recent luxury item listings.
+            </TableCaption>
+            <TableHeader>
+              <TableRow className="bg-gray-50 dark:bg-gray-800">
+                <TableHead
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider w-[25%]">Title</TableHead>
+                <TableHead
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Category</TableHead>
+                <TableHead
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Brand</TableHead>
+                <TableHead
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Condition</TableHead>
+                <TableHead
+                  className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Price
+                  (€)</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody
+              className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+              {listings?.map((listing) => (
+                <TableRow key={listing.id}
+                          className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <TableCell
+                    className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{listing.title}</TableCell>
+                  <TableCell
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{listing.category}</TableCell>
+                  <TableCell
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{listing.brand}</TableCell>
+                  <TableCell
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{listing.condition}</TableCell>
+                  <TableCell
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300 text-right">{listing.price?.toFixed(
+                    2) ?? "N/A"}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </>
       )}
     </section>
   );
