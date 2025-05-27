@@ -24,7 +24,7 @@ export default async function ListingsTable() {
       {listings?.length === 0 ? (
         <section className={"flex flex-col items-center justify-center gap-7"}>
           <p className="text-gray-500">You haven&#39;t created any
-            listings yet. Sell your first item!
+            listings yet. Add your first item!
           </p>
           <AddItemButton />
         </section>

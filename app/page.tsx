@@ -1,8 +1,6 @@
 import ListingsTable from "@/components/ListingsTable";
 import { authOptions } from "@/auth";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -18,12 +16,9 @@ export default async function Home() {
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
             Your exclusive marketplace for luxury second-hand Moroccan items.
+            <br />
+            Sign In to View & Sell Items
           </p>
-          <Link href="/api/auth/signin">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white">
-              Sign In to View & Sell Items
-            </Button>
-          </Link>
         </div>
       )}
     </main>
