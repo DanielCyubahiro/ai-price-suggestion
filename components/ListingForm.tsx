@@ -83,7 +83,7 @@ export default function ListingForm() {
     setIsSuggesting(false);
 
     if (result.success && result.price) {
-      form.setValue("price", result.price); // Set the suggested price
+      form.setValue("price", result.price);
       toast({
         title: "Price Suggested!",
         description: `We suggest a price of €${result.price.toFixed(2)}.`
@@ -106,8 +106,9 @@ export default function ListingForm() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <fieldset className="md:grid md:grid-cols-2 md:gap-x-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <fieldset
+                className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 md:gap-y-8">
                 {/* Title */}
                 <FormField
                   control={form.control}
@@ -171,8 +172,8 @@ export default function ListingForm() {
                   )}
                 />
               </fieldset>
-
-              <fieldset className="md:grid md:grid-cols-2 md:gap-x-6">
+              <fieldset
+                className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 md:gap-y-8">
                 {/* Category */}
                 <FormField
                   control={form.control}
@@ -311,22 +312,26 @@ export default function ListingForm() {
                 )}
               />
 
-              <div className="flex justify-between items-center">
+              <section
+                className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleSuggestPrice}
                   disabled={isSuggesting || isSubmitting}
+                  className="w-full sm:w-auto"
                 >
                   {isSuggesting ? "Thinking..." : "✨ Suggest Price (AI)"}
                 </Button>
 
-                <div className={"flex gap-2"}>
+                <section
+                  className="flex flex-col sm:flex-row gap-2 sm:gap-2">
                   <Button
                     type="button"
                     variant="ghost"
                     onClick={() => form.reset()}
                     disabled={isSubmitting || isSuggesting}
+                    className="w-full sm:w-auto"
                   >
                     Reset
                   </Button>
@@ -335,14 +340,19 @@ export default function ListingForm() {
                     variant="outline"
                     onClick={() => router.push("/")}
                     disabled={isSubmitting || isSuggesting}
+                    className="w-full sm:w-auto"
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={isSubmitting || isSubmitting}>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || isSuggesting}
+                    className="w-full sm:w-auto"
+                  >
                     {isSubmitting ? "Submitting..." : "Submit"}
                   </Button>
-                </div>
-              </div>
+                </section>
+              </section>
             </form>
           </Form>
         </CardContent>
