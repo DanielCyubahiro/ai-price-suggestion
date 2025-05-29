@@ -8,11 +8,17 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/webp"
 ];
 
-const fileSchema = z.any().refine((files) => files?.[0]?.size <= MAX_FILE_SIZE,
-  `Max file size is 5MB.`).refine(
-  (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-  ".jpg, .jpeg, .png and .webp files are accepted."
-).nullable().optional();
+const fileSchema = z.any().
+  refine((files) => !files || files.length === 0 || files?.[0]?.size <=
+      MAX_FILE_SIZE,
+    `Max file size is 5MB.`).
+  refine(
+    (files) => !files || files.length === 0 ||
+      ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+    ".jpg, .jpeg, .png and .webp files are accepted."
+  ).
+  nullable().
+  optional();
 
 /**
  * Defines the schema for listing data validation.
@@ -41,23 +47,13 @@ export const listingSchema = z.object({
     min(5, "Description must be at least 5 characters.").
     max(1000),
   photos: z.object({
-    front: fileSchema.refine(
-      val => val !== null && val !== undefined && val?.[0],
-      { message: "Front-view photo is required." }),
-    back: fileSchema.refine(
-      val => val !== null && val !== undefined && val?.[0],
-      { message: "Back-view photo is required." }),
-    side: fileSchema.refine(
-      val => val !== null && val !== undefined && val?.[0],
-      { message: "Side-view photo is required." }),
-    logo: fileSchema.refine(
-      val => val !== null && val !== undefined && val?.[0],
-      { message: "Logo close-up is required." }),
-    material: fileSchema.refine(
-      val => val !== null && val !== undefined && val?.[0],
-      { message: "Material close-up is required." }),
-    interior: fileSchema.optional()
-  }),
+    front: fileSchema,
+    back: fileSchema,
+    side: fileSchema,
+    logo: fileSchema,
+    material: fileSchema,
+    interior: fileSchema
+  }).optional(),
 
   // Step 2: Pricing
   price: z.coerce.number().
