@@ -18,12 +18,12 @@ import { getEnvVariable } from "@/lib/utils";
  * @returns A promise that resolves to a suggested numerical price.
  * @throws Error if the Gemini API call fails or returns an unexpected response.
  */
-async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promise<number> {
+async function getAISuggestedPrice(item: Omit<ListingFormData, "price" | "buyNowPrice" | "photos">): Promise<number> {
   const genAI = new GoogleGenerativeAI(getEnvVariable("GEMINI_API_KEY"));
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const prompt = `
-    You are a pricing expert for vintage luxury second-hand items especially from Moroccan origin.
+    You are a pricing expert for vintage luxury second-hand items.
     Suggest a fair market price based on the following details:
     
     Title: ${item.title}
@@ -31,11 +31,15 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
     Brand: ${item.brand}
     Category: ${item.category}
     Condition: ${item.condition}
+    Size/Dimensions: ${item.sizeDimensions}
+    Target Audience: ${item.targetAudience}
+    Material: ${item.material}
+    Color: ${item.color}
     
     Consider:
     - Current market trends for similar items
     - Rarity and desirability of the brand
-    - Item condition (mint, excellent, good, fair)
+    - Item condition
     - Recent sales of similar items
     
     Return only the numerical price value without any currency symbols or text.
@@ -71,7 +75,7 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
  * @param item - The item details (excluding price) for which to suggest a price.
  * @returns A promise resolving to an object with success status, suggested price, or an error message.
  */
-export async function suggestPriceAction(item: Omit<ListingFormData, "price">): Promise<{
+export async function suggestPriceAction(item: Omit<ListingFormData, "price" | "buyNowPrice" | "photos">): Promise<{
   success: boolean;
   price?: number;
   error?: string
@@ -122,7 +126,12 @@ export async function createListingAction(data: ListingFormData): Promise<{
     brand,
     category,
     condition,
-    price
+    price,
+    sizeDimensions,
+    collection,
+    targetAudience,
+    material,
+    buyNowPrice
   } = validation.data;
 
   try {
@@ -134,6 +143,11 @@ export async function createListingAction(data: ListingFormData): Promise<{
         category,
         condition,
         price,
+        sizeDimensions,
+        collection,
+        targetAudience,
+        material,
+        buyNowPrice,
         userId: session.user.id
       }
     });

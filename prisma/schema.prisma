@@ -56,16 +56,25 @@ model VerificationToken {
 }
 
 model Listing {
-  id          String   @id @default(cuid())
-  title       String
-  description String   @db.Text
-  brand       String
-  category    String
-  condition   String
-  price       Float?
-  imageUrl    String?
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id String @id @default(cuid())
+
+  // Step 1 Fields
+  title          String
+  description    String   @db.Text
+  brand          String
+  category       String
+  condition      String
+  sizeDimensions String?
+  collection     String?
+  targetAudience String
+  material       String?
+  color          String?
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Step 2 Fields
+  price       Float
+  buyNowPrice Float?
 }
