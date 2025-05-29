@@ -14,11 +14,10 @@ export default function PhotoUpload({
   name,
   label
 }: PhotoUploadProps) {
-  const { setValue, watch, formState: { errors } } = useFormContext();
+  const { setValue, watch, formState: {} } = useFormContext();
   const watchedFiles = watch(name);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const error = name.split(".").reduce((o, i) => o?.[i], errors as any);
 
   useEffect(() => {
     const files = watchedFiles;
@@ -100,11 +99,6 @@ export default function PhotoUpload({
           </Button>
         )}
       </div>
-      {error && (
-        <p className="text-sm font-medium text-destructive">
-          {error.message}
-        </p>
-      )}
     </div>
   );
 }

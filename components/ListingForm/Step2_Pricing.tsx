@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { suggestPriceAction } from "@/app/actions/listingActions"; //
 import { useToast } from "@/hooks/use-toast"; //
 import { useState } from "react";
-import PriceBreakdown from "@/components/ListingForm/PriceBreakdown";
+import PriceBreakdown from "@/components/PriceBreakdown";
 import { ListingFormData } from "@/lib/validators";
 
 export default function Step2_Pricing() {

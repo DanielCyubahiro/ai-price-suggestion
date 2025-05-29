@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import PhotoUpload from "@/components/ListingForm/PhotoUpload";
+import PhotoUpload from "@/components/PhotoUpload";
 
 export default function Step1_ItemDetails() {
   const { control } = useFormContext();
