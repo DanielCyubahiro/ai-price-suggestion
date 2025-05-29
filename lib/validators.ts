@@ -26,7 +26,7 @@ const fileSchema = z.any().
  */
 export const listingSchema = z.object({
   // Step 1: Item Details
-  title: z.string().min(5, "A title is required").max(100),
+  title: z.string().min(1, "A title is required").max(100),
   category: z.enum(["Jewelry", "Watches", "Bags", "Shoes"],
     { required_error: "Category is required." }),
   sizeDimensions: z.string().optional(),

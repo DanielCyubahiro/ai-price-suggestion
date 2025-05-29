@@ -126,7 +126,12 @@ export async function createListingAction(data: ListingFormData): Promise<{
     brand,
     category,
     condition,
-    price
+    price,
+    sizeDimensions,
+    collection,
+    targetAudience,
+    material,
+    buyNowPrice
   } = validation.data;
 
   try {
@@ -138,6 +143,11 @@ export async function createListingAction(data: ListingFormData): Promise<{
         category,
         condition,
         price,
+        sizeDimensions,
+        collection,
+        targetAudience,
+        material,
+        buyNowPrice,
         userId: session.user.id
       }
     });
