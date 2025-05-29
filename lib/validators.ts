@@ -64,8 +64,7 @@ export const listingSchema = z.object({
     positive("Price must be a positive number.").
     min(1, "Price is required."),
   buyNowPrice: z.coerce.number().
-    positive("Buy Now Price must be a positive number.").
-    min(1, "Buy Now Price is required.")
+    positive("Buy Now Price must be a positive number.").optional()
 });
 
 export type ListingFormData = z.infer<typeof listingSchema>;
