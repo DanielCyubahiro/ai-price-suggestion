@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import PhotoUpload from "@/components/ListingForm/PhotoUpload";
 
 export default function Step1_ItemDetails() {
   const { control } = useFormContext();
@@ -302,6 +303,7 @@ export default function Step1_ItemDetails() {
         />
       </fieldset>
 
+      {/* Description */}
       <FormField
         control={control}
         name="description"
@@ -316,6 +318,22 @@ export default function Step1_ItemDetails() {
           </FormItem>
         )}
       />
+
+      {/* Photo Uploads */}
+      <div className="space-y-4">
+        <h4 className="text-lg font-semibold">Upload Photos</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <PhotoUpload name="photos.front" label="Front-view"/>
+          <PhotoUpload name="photos.back" label="Back-view"/>
+          <PhotoUpload name="photos.side" label="Side-view"/>
+          <PhotoUpload name="photos.logo"
+                       label="Close up of the logo"/>
+          <PhotoUpload name="photos.material"
+                       label="Close up of the material"/>
+          <PhotoUpload name="photos.interior"
+                       label="Interior view" />
+        </div>
+      </div>
     </section>
   );
 }

@@ -79,14 +79,12 @@ export default function MultiStepListingForm() {
 
   async function onSubmit(values: ListingFormData) {
     if (currentStep !== STEPS.length) {
-      // Not on the final step yet, proceed to next step
       handleNext();
       return;
     }
 
     setIsSubmitting(true);
     console.log("Submitting full form data:", values);
-    // Adapt createListingAction to handle the new ListingFormData structure
     const result = await createListingAction(values);
     setIsSubmitting(false);
 
@@ -95,7 +93,7 @@ export default function MultiStepListingForm() {
         title: "Success!",
         description: "Your listing has been created."
       });
-      router.push("/"); // Or to the new listing's page
+      router.push("/");
     } else {
       toast({
         title: "Error",
