@@ -25,6 +25,12 @@ const STEPS = [
   { id: 5, name: "Review" }
 ];
 
+const stepFields: Record<number, (keyof ListingFormData)[]> = {
+  1: ["title", "category", "brand", "condition", "targetAudience",
+    "description"],
+  2: ["price"],
+};
+
 export default function MultiStepListingForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,6 +40,7 @@ export default function MultiStepListingForm() {
   // We'll need a more complex schema or per-step validation later
   const methods = useForm<ListingFormData>({
     resolver: zodResolver(listingSchema),
+    mode: "onChange",
     defaultValues: {
       category: undefined,
       title: "",
@@ -58,13 +65,19 @@ export default function MultiStepListingForm() {
     }
   });
 
-  const { handleSubmit, trigger, getValues } = methods;
+  const { handleSubmit, trigger } = methods;
 
   const handleNext = async () => {
-    // Implement per-step validation before proceeding
-    // For example, for step 1:
-    // const isValid = await trigger(["title", "category", ...otherStep1Fields]);
-    // if (!isValid) return;
+    const fieldsToValidate = stepFields[currentStep];
+    let isValid = true;
+
+    if (fieldsToValidate && fieldsToValidate.length > 0) {
+      isValid = await trigger(fieldsToValidate, { shouldFocus: true });
+    }
+
+    if (!isValid) {
+      return;
+    }
 
     if (currentStep < STEPS.length) {
       setCurrentStep((prev) => prev + 1);
@@ -77,15 +90,12 @@ export default function MultiStepListingForm() {
     }
   };
 
-  async function onSubmit(values: ListingFormData) {
-    if (currentStep !== STEPS.length) {
-      handleNext();
-      return;
-    }
-
+  async function processSubmit(values: ListingFormData) {
     setIsSubmitting(true);
-    console.log("Submitting full form data:", values);
-    const result = await createListingAction(values);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { photos, ...valuesWithoutPhotos } = values;
+
+    const result = await createListingAction(valuesWithoutPhotos);
     setIsSubmitting(false);
 
     if (result.success) {
@@ -108,7 +118,7 @@ export default function MultiStepListingForm() {
       <FormProvider {...methods}>
         <div className="max-w-4xl mx-auto p-4 flex flex-col items-center gap-7">
           <Stepper steps={STEPS} currentStep={currentStep} />
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-8">
+          <form onSubmit={handleSubmit(processSubmit)} className="mt-8 space-y-8">
             {currentStep === 1 && <Step1_ItemDetails />}
             {currentStep === 2 && <Step2_Pricing />}
             {currentStep === 3 && <Step3_Documents />}
