@@ -24,7 +24,7 @@ export default function Step1_ItemDetails() {
   const { control } = useFormContext();
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-6 w-[800]">
       <h3 className="text-lg font-semibold mb-4">Item Details</h3>
       <fieldset
         className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-6 md:gap-y-8">

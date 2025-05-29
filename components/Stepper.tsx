@@ -12,7 +12,7 @@ interface StepperProps {
 
 export default function Stepper({ steps, currentStep }: StepperProps) {
   return (
-    <nav aria-label="Progress">
+    <nav aria-label="Progress" className={"hidden sm:block"}>
       <ol role="list" className="flex items-center">
         {steps.map((step, stepIdx) => (
           <li key={step.name}

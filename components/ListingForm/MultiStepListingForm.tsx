@@ -90,7 +90,7 @@ export default function MultiStepListingForm() {
     }
   };
 
-  async function processSubmit(values: ListingFormData) {
+  const processSubmit = async (values: ListingFormData) => {
     setIsSubmitting(true);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { photos, ...valuesWithoutPhotos } = values;
@@ -111,12 +111,12 @@ export default function MultiStepListingForm() {
         variant: "destructive"
       });
     }
-  }
+  };
 
   return (
     <TooltipProvider>
       <FormProvider {...methods}>
-        <div className="max-w-4xl mx-auto p-4 flex flex-col items-center gap-7">
+        <div className="max-w-6xl mx-auto p-4 flex flex-col items-center gap-7 ">
           <Stepper steps={STEPS} currentStep={currentStep} />
           <form onSubmit={handleSubmit(processSubmit)} className="mt-8 space-y-8">
             {currentStep === 1 && <Step1_ItemDetails />}
