@@ -74,9 +74,10 @@ export default function Step2_Pricing() {
               <FormControl>
                 <Input
                   type="number"
-                  step="0.01"
+                  step="1"
                   placeholder="e.g., 150.00"
                   {...field}
+                  value={field.value ?? ""}
                   onChange={(e) => field.onChange(
                     parseFloat(e.target.value) || 0)}
                 />
@@ -105,9 +106,10 @@ export default function Step2_Pricing() {
               <FormControl>
                 <Input
                   type="number"
-                  step="0.01"
+                  step="1"
                   placeholder="e.g., 200.00"
                   {...field}
+                  value={field.value ?? ""}
                   onChange={(e) => field.onChange(
                     parseFloat(e.target.value) || undefined)}
                 />
