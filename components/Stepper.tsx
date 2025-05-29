@@ -24,10 +24,10 @@ export default function Stepper({ steps, currentStep }: StepperProps) {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="h-0.5 w-full bg-primary" />
+                  <div className="h-0.5 w-full bg-gray-600" />
                 </div>
                 <div
-                  className="relative flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground"
+                  className="relative flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 text-primary-foreground"
                 >
                   <svg
                     className="h-5 w-5"
