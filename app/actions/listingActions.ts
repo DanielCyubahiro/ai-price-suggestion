@@ -23,7 +23,7 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const prompt = `
-    You are a pricing expert for vintage luxury second-hand items especially from Moroccan origin.
+    You are a pricing expert for vintage luxury second-hand items.
     Suggest a fair market price based on the following details:
     
     Title: ${item.title}
@@ -31,11 +31,15 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
     Brand: ${item.brand}
     Category: ${item.category}
     Condition: ${item.condition}
+    Size/Dimensions: ${item.sizeDimensions}
+    Target Audience: ${item.targetAudience}
+    Material: ${item.material}
+    Color: ${item.color}
     
     Consider:
     - Current market trends for similar items
     - Rarity and desirability of the brand
-    - Item condition (mint, excellent, good, fair)
+    - Item condition
     - Recent sales of similar items
     
     Return only the numerical price value without any currency symbols or text.
