@@ -18,7 +18,7 @@ import { getEnvVariable } from "@/lib/utils";
  * @returns A promise that resolves to a suggested numerical price.
  * @throws Error if the Gemini API call fails or returns an unexpected response.
  */
-async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promise<number> {
+async function getAISuggestedPrice(item: Omit<ListingFormData, "price" | "buyNowPrice" | "photos">): Promise<number> {
   const genAI = new GoogleGenerativeAI(getEnvVariable("GEMINI_API_KEY"));
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -75,7 +75,7 @@ async function getAISuggestedPrice(item: Omit<ListingFormData, "price">): Promis
  * @param item - The item details (excluding price) for which to suggest a price.
  * @returns A promise resolving to an object with success status, suggested price, or an error message.
  */
-export async function suggestPriceAction(item: Omit<ListingFormData, "price">): Promise<{
+export async function suggestPriceAction(item: Omit<ListingFormData, "price" | "buyNowPrice" | "photos">): Promise<{
   success: boolean;
   price?: number;
   error?: string
