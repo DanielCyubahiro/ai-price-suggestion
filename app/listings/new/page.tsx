@@ -1,7 +1,8 @@
-import ListingForm from "@/components/ListingForm";
 import { authOptions } from "@/auth";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import MultiStepListingForm
+  from "@/components/ListingForm/MultiStepListingForm";
 
 export default async function NewListingPage() {
   const session = await getServerSession(authOptions);
@@ -11,8 +12,7 @@ export default async function NewListingPage() {
   }
   return (
     <section>
-      <h1 className="text-3xl font-bold mb-8 text-center">Add New Listing</h1>
-      <ListingForm />
+      <MultiStepListingForm />
     </section>
   );
 }
